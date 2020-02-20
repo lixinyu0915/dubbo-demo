@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lixinyu.dao.ArticleDao">
+   <select id="list" resultType="Article">
+		select a.id,a.title,a.created,u.nickname,a.commentCnt,a.status 
+		from cms_article a LEFT JOIN cms_user u on a.user_id =u.id  
+	 	
+	       <if test="condition!=null and condition!=''">
+	       order by ${condition} desc
+	       </if>
+	  		
+			<if test="begin_time!=null and begin_time!=''">
+			a.created &gt;= #{begin_time}
+			</if>
+			<if test="end_time!=null and end_time!=''">
+			a.created &lt;= #{end_time}
+			</if>
+			
+	</select>
+</mapper>
